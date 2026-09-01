@@ -192,6 +192,8 @@ Warum es genau deine Kriterien trifft:
 
 > Ehrlich: In Phase 3 (Klausuren) darf dieser Pillar **pausieren**. Er ist ein Marathon, kein Sprint — Hauptsache, du fällst nicht ganz raus.
 
+> 📄 **Detaillierter 90-Tage-Fahrplan:** siehe [`skill-video-editing.md`](./skill-video-editing.md) — Woche für Woche von den Grundlagen bis zu den ersten zahlenden Kunden.
+
 ---
 
 ## Pillar 6 — Deutschland verlassen ✈️
