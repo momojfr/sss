@@ -104,28 +104,35 @@ Fokus fast nur auf Klausuren. Alles andere auf **Minimum-Maintenance**.
 
 ## Pillar 3 — 10.000 € sparen 💰
 
-**Die Mathematik (Beispiel — deine Zahlen eintragen):**
+**Die Mathematik (deine Zahlen):**
 
 ```
-Zielbetrag:           10.000 €
-- bereits gespart:     _____ €   ← eintragen
-= noch nötig:          _____ €
-Monate bis Ziel:       ~10 (Sep 2026 → ~Mitte 2027)
-→ nötige Sparrate:     ~1.000 €/Monat   (bei 0 € Start)
+Aktuell auf Tasche:     1.000 €
+Zielbetrag:            10.000 €
+Noch nötig aus Sparen:  9.000 €
+Sparrate (ab Job):      1.000 €/Monat
+→ nötige Spar-Monate:   9 Monate
 ```
+
+**Was das heißt:** Wenn dein Job **im Oktober** startet und du 9 Monate lang 1.000 €/Monat wegpackst, bist du **~Juli 2027** bei 10.000 €. Das passt genau ins Bachelor-Fenster — aber es ist **eng**, deshalb zählen zwei Dinge doppelt:
+
+1. **Job so früh wie möglich.** Jeder Monat ohne Job kostet dich 1.000 € Puffer. → Bewerbungen sind Prio 1 diese Woche.
+2. **1.000 €/Monat = fast dein ganzes Werkstudi-Gehalt.** Bei 20 h/Woche landest du grob bei ~1.000–1.200 € netto. 1.000 € sparen geht also nur mit **niedrigen Fixkosten** (z. B. günstig/zu Hause wohnen). Wenn Miete & Co. mehr fressen, brauchst du entweder eine kleinere Sparrate **oder** Zusatz-Einkommen aus dem Online-Skill (Pillar 5).
+
+> **Reality-Check:** In der Klausurphase (Jan/Feb) arbeitest du evtl. weniger → plane 1 „Sparraten-Pause" ein und hol sie danach wieder rein. Lieber realistisch als frustriert.
 
 **Realistische Hebel:**
-- **Werkstudentenjob:** ~€1.000–1.500 netto/Monat (max. 20 h/Woche in der Vorlesungszeit). Das ist dein Haupt-Motor.
-- **Feste Sparrate zuerst:** Am Zahltag sofort einen Fixbetrag auf ein separates Konto (Pay-yourself-first). Was übrig bleibt, ist zum Leben.
-- **Ausgaben-Check:** 1x Kontoauszug durchgehen, Abos killen, die du nicht brauchst.
-- **Online-Skill (Pillar 5):** kommt später oben drauf → beschleunigt das Ziel.
+- **Werkstudentenjob (20 h/Woche):** dein Haupt-Motor. Am besten fachnah oder gut bezahlt.
+- **Pay-yourself-first:** Am Zahltag sofort 1.000 € per Dauerauftrag auf ein separates Konto. Rest = Leben.
+- **Ausgaben-Check:** 1x Kontoauszug durchgehen, unnötige Abos killen.
+- **Online-Skill (Pillar 5):** ab Frühjahr Zusatz-Einkommen → Puffer & Beschleuniger fürs Ziel.
 
 **Schritte:**
-- [ ] Aktuellen Sparstand & monatliche Fixkosten aufschreiben
-- [ ] Sparrate festlegen und Dauerauftrag einrichten
 - [ ] Lebenslauf aktualisieren
 - [ ] Diese Woche 5–10 Werkstudenten-Bewerbungen raus
 - [ ] Separates Sparkonto/Unterkonto eröffnen
+- [ ] Ab 1. Gehalt: Dauerauftrag 1.000 € einrichten
+- [ ] Fixkosten aufschreiben → prüfen, ob 1.000 € realistisch sind
 
 > **Wichtig:** Achte als Werkstudent auf die 20-h-Grenze in der Vorlesungszeit (Versicherungsstatus) und ggf. den BAföG-Freibetrag, falls relevant.
 
@@ -156,22 +163,32 @@ Monate bis Ziel:       ~10 (Sep 2026 → ~Mitte 2027)
 
 **Regel Nr. 1: EINEN Skill wählen und dabei bleiben.** Skill-Hopping ist der Killer. Entscheide dich bis **30.09.** und gib ihm mind. 90 Tage.
 
-**Kandidaten (vom Mac aus, remote-fähig):**
+**Deine Kriterien:** kreativ · vom Mac aus · **nicht KI-abhängig** (also kein „ich prompte nur ChatGPT"-Business, sondern ein echtes Handwerk mit Geschmack & Auge, das KI eher unterstützt als ersetzt).
 
-| Skill | Zeit bis erstes Geld | Passt gut wenn du… |
-|-------|----------------------|--------------------|
-| **Webentwicklung / Coding** | mittel | logisch denkst, Geduld für Aufbau hast (du hast schon ein Git-Repo 👀) |
-| **Copywriting / Content** | schnell | gut schreibst, Sprache magst |
-| **Video-Editing / Shorts** | schnell–mittel | Auge für Schnitt/Storytelling hast |
-| **Social-Media-Management** | schnell | organisiert bist, Plattformen verstehst |
-| **AI-Automatisierung / No-Code** | mittel | Tools verbinden & Prozesse bauen magst |
+**Kandidaten, die dazu passen:**
 
-**Vorgehen (egal welcher Skill):**
-- [ ] Skill final wählen (Deadline 30.09.)
-- [ ] EINEN guten Kurs/Lernpfad festlegen — nicht 10 Tabs
-- [ ] Feste Lern-Slots pro Woche (z. B. 3x 1 h)
-- [ ] Ab Woche 3–4: erstes echtes Projekt (auch unbezahlt/klein)
-- [ ] Ab November: kleines Portfolio + erste Angebote/Kunden
+| Skill | KI-resistent? | Zeit bis 1. Geld | Bemerkung |
+|-------|:---:|:---:|-----------|
+| **Video-Editing (Short-Form)** ⭐ | hoch | schnell–mittel | Riesen-Nachfrage (Creator/Marken brauchen Reels/Shorts); Schnitt-Geschmack & Timing bleiben menschlich |
+| **Motion Design / Animation** | hoch | mittel | kreativ, handwerklich, gut bezahlt |
+| **Social-Media / Content-Strategie** | hoch | schnell | Trends, Community, Timing — Beziehungs- & Geschmackssache |
+| **Foto-/Video-Retusche & Color** | mittel–hoch | mittel | braucht Auge, weniger „Prompt-Ware" |
+
+**⭐ Meine Empfehlung: Video-Editing für Short-Form Content.**
+Warum es genau deine Kriterien trifft:
+- **Kreativ & handwerklich** — Schnitt, Rhythmus, Hook, Storytelling. Geschmack, den KI (noch) nicht ersetzt; sie hilft höchstens bei Untertiteln.
+- **Voll vom Mac** — DaVinci Resolve (kostenlos) oder CapCut/Premiere. Keine teure Ausrüstung nötig.
+- **Nachfrage explodiert** — jeder Creator, Coach und jede Marke braucht laufend Reels/Shorts/TikToks. Wiederkehrende Kunden = wiederkehrendes Geld.
+- **Schnell erste Einnahmen** — Portfolio zählt, keine Zertifikate/Gatekeeper. Erste bezahlte Edits oft schon nach 4–8 Wochen möglich.
+- **Ortsunabhängig** — trägt später auch nach deinem Exit aus Deutschland (Pillar 6).
+
+**Vorgehen (90-Tage-Logik):**
+- [ ] Skill final bestätigen: Video-Editing (Deadline 30.09.)
+- [ ] EINEN Lernpfad + EIN Tool festlegen (Empfehlung: DaVinci Resolve, gratis) — nicht 10 Tabs
+- [ ] Feste Lern-Slots: 3x 1 h/Woche
+- [ ] Woche 2–4: Übungs-Edits nachbauen (bestehende Reels als Vorlage)
+- [ ] Woche 4–8: 3–5 eigene Edits als Portfolio (z. B. für fiktive/kostenlose Kunden)
+- [ ] Ab Woche 8: aktiv Creator/Marken anschreiben, erste bezahlte Aufträge
 
 > Ehrlich: In Phase 3 (Klausuren) darf dieser Pillar **pausieren**. Er ist ein Marathon, kein Sprint — Hauptsache, du fällst nicht ganz raus.
 
