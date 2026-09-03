@@ -1,0 +1,13 @@
+datum,soll,haben,betrag,text
+2026-01-02,1200,0800,50000,Kapitaleinlage
+2026-01-05,0410,1200,10000,Kauf Bueroausstattung netto
+2026-01-05,1576,1200,1900,Vorsteuer auf Bueroausstattung
+2026-02-10,3200,1600,5000,Wareneinkauf auf Ziel netto
+2026-02-10,1576,1600,950,Vorsteuer Wareneinkauf
+2026-03-15,1200,8400,20000,Warenverkauf netto
+2026-03-15,1200,1776,3800,Umsatzsteuer auf Verkauf
+2026-03-31,4120,1740,3000,Gehalt Maerz
+2026-03-31,4130,1742,600,AG-Anteil SV Maerz
+2026-03-31,4210,1200,1200,Bueromiete
+2026-06-30,4830,0410,2000,Abschreibung Bueroausstattung
+2026-06-30,1200,2650,50,Zinsgutschrift

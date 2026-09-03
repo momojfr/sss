@@ -12,15 +12,18 @@ description: >-
   "Buchhaltung", "Beleg", "Rechnung erfassen", "Kontierung", "EÜR",
   "Einnahmen-Überschuss", "Umsatzsteuer", "USt-Voranmeldung", "Vorsteuer",
   "Ausgaben kategorisieren", "Gehalt", "Lohn", "Gehaltsabrechnung",
-  "Lohnabrechnung", "Brutto Netto", "Lohnsteuer", "Sozialversicherung",
-  "bookkeeping", "payroll", "categorise these receipts", "prepare my VAT return",
+  "Lohnabrechnung", "Brutto Netto", "Lohnsteuer", "Sozialversicherung", and on
+  double-entry bookkeeping: "doppelte Buchführung", "Soll und Haben",
+  "Buchungssatz", "GuV", "Gewinn- und Verlustrechnung", "Bilanz", "Saldenliste",
+  "Jahresabschluss", "bookkeeping", "payroll", "P&L", "balance sheet",
+  "categorise these receipts", "prepare my VAT return",
   even when the user only drops a folder of PDFs and says "mach mal Buchhaltung".
 ---
 
-# Buchhaltung — Belege erfassen, buchen, EÜR & USt
+# Buchhaltung — Belege, EÜR/GuV, USt, Lohn & doppelte Buchführung
 
 Dieser Skill hilft bei der laufenden Buchhaltung für Selbstständige und kleine
-Unternehmen im deutschsprachigen Raum. Er deckt drei Bereiche ab, die
+Unternehmen im deutschsprachigen Raum. Er deckt fünf Bereiche ab, die
 aufeinander aufbauen:
 
 1. **Belege & Rechnungen** — Daten aus PDF/Bild-Belegen strukturiert erfassen.
@@ -28,6 +31,8 @@ aufeinander aufbauen:
    eine EÜR aufbauen.
 3. **USt & Steuer** — Umsatz- und Vorsteuer berechnen, USt-Voranmeldung
    vorbereiten.
+4. **Löhne & Gehälter** — Brutto→Netto, Lohnsteuer (amtlicher PAP), SV, Abrechnung.
+5. **Doppelte Buchführung** — Soll/Haben, GuV und Bilanz (für Bilanzierer).
 
 Fast jede Aufgabe folgt derselben Kette: **Beleg → Buchungssatz → Auswertung.**
 Erfasse einmal sauber, dann fallen EÜR und USt-Voranmeldung fast von selbst ab.
@@ -274,6 +279,44 @@ abfließen — der volle Personalaufwand ist AG-brutto.
 
 ---
 
+## Bereich 5 — Doppelte Buchführung (Soll/Haben, GuV, Bilanz)
+
+Nur für **Bilanzierungspflichtige** (Kaufleute, GmbH/UG, oder bei Überschreiten
+der Grenzen nach § 241a HGB / § 141 AO — ca. 800.000 € Umsatz bzw. 80.000 €
+Gewinn). Wer eine EÜR macht, bleibt bei Bereich 2 — EÜR ≠ GuV.
+
+**Soll/Haben-Grundregel.** Jede Buchung ist „**Soll an Haben**"; die Summe aller
+Soll-Buchungen ist gleich der Summe aller Haben-Buchungen. Aktiv- und
+Aufwandskonten nehmen im **Soll** zu, Passiv-, Eigenkapital- und Ertragskonten
+im **Haben**. Regeln, Buchungssatz-Beispiele und die GuV-/Bilanz-Gliederungen
+stehen in `references/doppelte-buchfuehrung.md` — **lies die Datei**, bevor du
+buchst oder einen Abschluss erstellst.
+
+**Journal → GuV + Bilanz (Skript).** Erfasse den Buchungsstoff als Journal (CSV:
+`datum,soll,haben,betrag,text`) und werte es mit `scripts/buchhaltung_auswertung.py`
+aus — es liefert Saldenliste, GuV und Bilanz mit Kontrollsummen
+(Soll = Haben, Aktiva = Passiva):
+
+```bash
+# Gesamtkostenverfahren (Standard)
+python3 scripts/buchhaltung_auswertung.py --journal scripts/beispiel_journal.csv
+
+# Umsatzkostenverfahren (braucht Funktionen je Aufwandskonto)
+python3 scripts/buchhaltung_auswertung.py --journal scripts/beispiel_journal.csv \
+    --konten scripts/beispiel_konten.csv --verfahren ukv
+```
+
+Das Skript kennt die gängigen SKR03-Konten eingebaut; **unbekannte Konten meldet
+es**, statt sie zu raten — dann in einer `--konten`-CSV ergänzen (überlagert die
+Standardzuordnung feldweise). GuV wahlweise **GKV** (nach Aufwandsarten) oder
+**UKV** (nach Funktionsbereichen; braucht `funktion` = Herstellung/Vertrieb/
+Verwaltung je Aufwandskonto). Beide führen zum selben Jahresüberschuss.
+
+Nicht abgebildet (→ `PRÜFEN`, Fachkraft/Software): Abschluss-/Abgrenzungs­buchungen,
+Rückstellungsbewertung, Anhang/Lagebericht, E-Bilanz-Taxonomie.
+
+---
+
 ## Arbeitsprinzipien (für alle Bereiche)
 
 - **Nachvollziehbarkeit vor Vollständigkeit.** Jede Zahl muss auf einen Beleg
@@ -305,7 +348,12 @@ abfließen — der volle Personalaufwand ist AG-brutto.
 - `references/lohn-gehalt.md` — SV-Beitragssätze, Beitragsbemessungsgrenzen,
   Lohnsteuerklassen, Lohnkonten/Buchungssätze und Melde­fristen. Lesen für jede
   Gehalts-/Lohnabrechnung und vor dem Verbuchen von Löhnen.
+- `references/doppelte-buchfuehrung.md` — Soll/Haben-Regeln, Buchungssätze,
+  GuV (§ 275 HGB, GKV & UKV) und Bilanz (§ 266 HGB). Lesen für Bilanzierer.
 - `scripts/gehaltsabrechnung.py` — Brutto→Netto-Rechner (SV + Lohnsteuer), gibt
   die komplette Abrechnung aus. Für Standard-Gehaltsabrechnungen nutzen.
 - `scripts/lohnsteuer_2026.py` — amtliche Lohnsteuer 2026 (BMF-PAP, § 39b EStG),
   gegen die amtlichen Prüftabellen verifiziert (`--selftest`).
+- `scripts/buchhaltung_auswertung.py` — doppelte Buchführung: Journal (CSV) →
+  Saldenliste, GuV (GKV/UKV) und Bilanz mit Kontrollsummen. Beispiele:
+  `scripts/beispiel_journal.csv`, `scripts/beispiel_konten.csv`.
