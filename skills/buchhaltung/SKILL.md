@@ -1,14 +1,19 @@
 ---
 name: buchhaltung
 description: >-
-  Use when the user works on bookkeeping / accounting tasks (Buchhaltung) —
-  reading invoices and receipts (Belege, Rechnungen), extracting amounts, VAT
-  (USt/MwSt) and dates into a table, categorising and posting transactions
-  (Kontierung, SKR03/SKR04), preparing an Einnahmen-Überschuss-Rechnung (EÜR),
-  or calculating VAT and the USt-Voranmeldung. Triggers on "Buchhaltung",
-  "Beleg", "Rechnung erfassen", "Kontierung", "EÜR", "Einnahmen-Überschuss",
-  "Umsatzsteuer", "USt-Voranmeldung", "Vorsteuer", "Ausgaben kategorisieren",
-  "bookkeeping", "categorise these receipts", "prepare my VAT return",
+  Use when the user works on bookkeeping / accounting / payroll tasks
+  (Buchhaltung, Lohn, Gehalt) — reading invoices and receipts (Belege,
+  Rechnungen), extracting amounts, VAT (USt/MwSt) and dates into a table,
+  categorising and posting transactions (Kontierung, SKR03/SKR04), preparing an
+  Einnahmen-Überschuss-Rechnung (EÜR), calculating VAT and the USt-Voranmeldung,
+  and running payroll: gross-to-net (Brutto→Netto), Lohnsteuer & social security
+  (KV/PV/RV/AV), building a payslip (Gehaltsabrechnung/Lohnzettel), posting
+  wages, and the Lohnsteuer-Anmeldung / SV-Beitragsnachweis. Triggers on
+  "Buchhaltung", "Beleg", "Rechnung erfassen", "Kontierung", "EÜR",
+  "Einnahmen-Überschuss", "Umsatzsteuer", "USt-Voranmeldung", "Vorsteuer",
+  "Ausgaben kategorisieren", "Gehalt", "Lohn", "Gehaltsabrechnung",
+  "Lohnabrechnung", "Brutto Netto", "Lohnsteuer", "Sozialversicherung",
+  "bookkeeping", "payroll", "categorise these receipts", "prepare my VAT return",
   even when the user only drops a folder of PDFs and says "mach mal Buchhaltung".
 ---
 
@@ -173,7 +178,88 @@ konkrete Frist, wenn der Nutzer einen Zeitraum abrechnet.
 
 ---
 
-## Arbeitsprinzipien (für alle drei Bereiche)
+## Bereich 4 — Löhne & Gehälter
+
+Ziel: aus einem Bruttogehalt die Abrechnung machen (Brutto → Netto), sie als
+Dokument ausgeben, korrekt verbuchen und die Meldungen ans FA/an die
+Krankenkasse vorbereiten.
+
+> **Grenze der Genauigkeit — bitte ernst nehmen.** Die **Sozialversicherung**
+> lässt sich mit festen Prozentsätzen und Beitragsbemessungsgrenzen exakt
+> rechnen. Die **Lohnsteuer** dagegen folgt dem amtlichen Programmablaufplan
+> (PAP) des BMF und hängt von Steuerklasse, Freibeträgen (ELStAM),
+> Kinderfreibeträgen und dem genauen Jahr ab — ohne die amtliche Tabelle/den PAP
+> des betreffenden Jahres ist sie **nicht rechtsverbindlich** ermittelbar. Nenne
+> die Lohnsteuer daher als Schätzung/Platzhalter und markiere sie `PRÜFEN: LSt`,
+> solange keine offizielle Tabelle oder ein Lohnprogramm (z. B. ELSTER/Lohn+Gehalt,
+> sv.net, DATEV, Lexware) die Zahl liefert. Für einen echten Abrechnungslauf mit
+> mehreren Mitarbeitern ist zertifizierte Lohnsoftware Pflicht.
+
+**Vorgehen je Mitarbeiter und Monat:**
+
+1. **Eckdaten sammeln:** Bruttogehalt, Steuerklasse (I–VI), Kinderfreibeträge,
+   Konfession (Kirchensteuer 8 %/9 %), KV-Typ (gesetzlich/privat), Zusatzbeitrag
+   der Krankenkasse, Bundesland (Sachsen weicht bei der PV ab), Alter/Kinder
+   (Pflegeversicherungs-Zuschlag bzw. -Abschläge), sonstige Bezüge.
+2. **Sozialversicherung rechnen** — je Zweig `Beitrag = min(Brutto, BBG) × Satz`,
+   aufgeteilt in Arbeitnehmer- und Arbeitgeberanteil. Sätze,
+   Beitragsbemessungsgrenzen und Sonderregeln stehen in
+   `references/lohn-gehalt.md` — **lies die Datei**, bevor du rechnest, und prüfe,
+   ob die dort genannten Werte für das abzurechnende Jahr noch aktuell sind
+   (sie ändern sich jährlich).
+3. **Lohnsteuer/Soli/KiSt** aus der amtlichen Tabelle/dem PAP ziehen (siehe
+   Warnung oben) oder als `PRÜFEN: LSt` offenlassen.
+4. **Netto ermitteln:** `Netto = Brutto − LSt − Soli − KiSt − AN-Anteil SV`.
+5. **Arbeitgeberkosten:** `AG-brutto = Brutto + AG-Anteil SV + Umlagen (U1/U2,
+   Insolvenzgeldumlage) + gesetzliche Unfallversicherung`. Das ist die Zahl, die
+   den Arbeitgeber real kostet — wichtig für die EÜR.
+6. **Rechenprobe:** AN-Anteil + AG-Anteil je SV-Zweig muss dem Gesamtbeitrag
+   entsprechen; bei vielen Zeilen mit einem kleinen Python-Skript rechnen.
+
+**Abrechnung als Dokument.** Standard-Aufbau des Lohnzettels — für ein echtes
+PDF/eine Tabelle den `pdf`- bzw. `xlsx`-Skill nutzen:
+
+```
+Gehaltsabrechnung <Monat/Jahr> — <Name> (Steuerklasse <…>)
+Bruttobezüge
+  Grundgehalt                                .......
+  ggf. Zulagen / Sachbezüge                  .......
+= Gesamtbrutto                               =======
+Gesetzliche Abzüge (Arbeitnehmer)
+  Lohnsteuer                               − .......
+  Solidaritätszuschlag                     − .......
+  Kirchensteuer                            − .......
+  Krankenversicherung (AN)                 − .......
+  Pflegeversicherung (AN)                  − .......
+  Rentenversicherung (AN)                  − .......
+  Arbeitslosenversicherung (AN)            − .......
+= Nettoverdienst / Auszahlungsbetrag         =======
+Nachrichtlich: Arbeitgeberanteil SV + Umlagen  .......
+```
+
+**Verbuchen.** Kontonummern (SKR03/SKR04) und Buchungssätze stehen in
+`references/lohn-gehalt.md`. Grundmuster:
+- Aufwand: Löhne/Gehälter (Bruttolohn) + gesetzliche soziale Aufwendungen
+  (AG-Anteil).
+- Gegenkonten: Verbindlichkeiten aus Lohn/Gehalt (Nettoauszahlung),
+  Verbindlichkeiten Finanzamt (LSt/Soli/KiSt), Verbindlichkeiten SV (AN+AG-Anteil).
+
+In der **EÜR** (Zufluss-/Abfluss-Prinzip) zählt der Aufwand im Monat der
+*Zahlung*: Nettolohn, Lohnsteuer und SV-Beiträge sind Betriebsausgaben, wenn sie
+abfließen — der volle Personalaufwand ist AG-brutto.
+
+**Meldungen & Fristen** (Details + aktuelle Schwellen in `references/lohn-gehalt.md`):
+- **Lohnsteuer-Anmeldung** ans Finanzamt (ELSTER), bis 10. des Folgemonats;
+  Turnus monatlich/vierteljährlich/jährlich je nach Vorjahres-Lohnsteuer.
+- **SV-Beitragsnachweis** an die Krankenkasse (Einzugsstelle); Beiträge fällig am
+  drittletzten Bankarbeitstag des Monats.
+- **DEÜV-Meldungen** (An-/Abmeldung, Jahresmeldung) via Lohnprogramm/sv.net.
+- Jährlich: **Lohnsteuerbescheinigung** an FA/Arbeitnehmer, Meldung an
+  Berufsgenossenschaft (Unfallversicherung).
+
+---
+
+## Arbeitsprinzipien (für alle Bereiche)
 
 - **Nachvollziehbarkeit vor Vollständigkeit.** Jede Zahl muss auf einen Beleg
   zurückführbar sein. Lieber eine Zeile als `PRÜFEN` offenlassen als sie zu
@@ -201,3 +287,6 @@ konkrete Frist, wenn der Nutzer einen Zeitraum abrechnet.
   Anlage EÜR. Lesen, wenn der Nutzer das Formular ausfüllen will.
 - `references/ust-kennzahlen.md` — Kennzahlen der USt-Voranmeldung inkl.
   Sonderfälle (§ 13b, EU). Lesen bei USt-Voranmeldung und Auslandssachverhalten.
+- `references/lohn-gehalt.md` — SV-Beitragssätze, Beitragsbemessungsgrenzen,
+  Lohnsteuerklassen, Lohnkonten/Buchungssätze und Melde­fristen. Lesen für jede
+  Gehalts-/Lohnabrechnung und vor dem Verbuchen von Löhnen.
