@@ -209,6 +209,21 @@ Krankenkasse vorbereiten.
    (sie ändern sich jährlich).
 3. **Lohnsteuer/Soli/KiSt** aus der amtlichen Tabelle/dem PAP ziehen (siehe
    Warnung oben) oder als `PRÜFEN: LSt` offenlassen.
+
+**Rechen-Skript.** Für Standardfälle gibt es `scripts/gehaltsabrechnung.py` —
+rechnet die **SV exakt** (2026er-Sätze/BBG) und die **Lohnsteuer als
+dokumentierte Näherung** (§32a-Tarif + vereinfachte Vorsorgepauschale). Nutze es,
+statt die Beträge von Hand zu rechnen:
+
+```bash
+python3 scripts/gehaltsabrechnung.py --brutto 4000 --steuerklasse 1 \
+    --kinderlos --bundesland NW --konfession keine
+```
+Wichtig: Der Lohnsteuer-Teil ist **vorläufig** (§32a-2026-Parameter noch nicht
+gegen den PAP geprüft) und weicht um einige Euro ab — die Zahl immer als
+Näherung ausweisen und `PRÜFEN: LSt` setzen. Sobald der amtliche BMF-PAP 2026
+vorliegt, den Block „LOHNSTEUER (NÄHERUNG)" im Skript durch die exakte
+PAP-Umsetzung ersetzen; die SV-Berechnung bleibt unverändert.
 4. **Netto ermitteln:** `Netto = Brutto − LSt − Soli − KiSt − AN-Anteil SV`.
 5. **Arbeitgeberkosten:** `AG-brutto = Brutto + AG-Anteil SV + Umlagen (U1/U2,
    Insolvenzgeldumlage) + gesetzliche Unfallversicherung`. Das ist die Zahl, die
@@ -290,3 +305,5 @@ abfließen — der volle Personalaufwand ist AG-brutto.
 - `references/lohn-gehalt.md` — SV-Beitragssätze, Beitragsbemessungsgrenzen,
   Lohnsteuerklassen, Lohnkonten/Buchungssätze und Melde­fristen. Lesen für jede
   Gehalts-/Lohnabrechnung und vor dem Verbuchen von Löhnen.
+- `scripts/gehaltsabrechnung.py` — Brutto→Netto-Rechner: SV exakt (2026),
+  Lohnsteuer als Näherung. Für Standard-Gehaltsabrechnungen nutzen.
