@@ -184,16 +184,16 @@ Ziel: aus einem Bruttogehalt die Abrechnung machen (Brutto → Netto), sie als
 Dokument ausgeben, korrekt verbuchen und die Meldungen ans FA/an die
 Krankenkasse vorbereiten.
 
-> **Grenze der Genauigkeit — bitte ernst nehmen.** Die **Sozialversicherung**
-> lässt sich mit festen Prozentsätzen und Beitragsbemessungsgrenzen exakt
-> rechnen. Die **Lohnsteuer** dagegen folgt dem amtlichen Programmablaufplan
-> (PAP) des BMF und hängt von Steuerklasse, Freibeträgen (ELStAM),
-> Kinderfreibeträgen und dem genauen Jahr ab — ohne die amtliche Tabelle/den PAP
-> des betreffenden Jahres ist sie **nicht rechtsverbindlich** ermittelbar. Nenne
-> die Lohnsteuer daher als Schätzung/Platzhalter und markiere sie `PRÜFEN: LSt`,
-> solange keine offizielle Tabelle oder ein Lohnprogramm (z. B. ELSTER/Lohn+Gehalt,
-> sv.net, DATEV, Lexware) die Zahl liefert. Für einen echten Abrechnungslauf mit
-> mehreren Mitarbeitern ist zertifizierte Lohnsoftware Pflicht.
+> **Genauigkeit & Grenzen.** Die **Sozialversicherung** wird mit festen
+> Prozentsätzen und Beitragsbemessungsgrenzen exakt gerechnet. Die **Lohnsteuer**
+> berechnet `scripts/lohnsteuer_2026.py` nach dem **amtlichen BMF-Programmablauf­plan
+> 2026** (§ 39b EStG) — das Skript ist per Selbsttest gegen die amtlichen
+> Prüftabellen verifiziert (Steuerklassen I–VI, laufender Arbeitslohn). Noch
+> nicht abgebildet sind Sonderfälle: Versorgungsbezüge, Altersentlastungs­betrag,
+> sonstige Bezüge (Einmalzahlungen), Faktorverfahren und ELStAM-Freibeträge —
+> in diesen Fällen `PRÜFEN` markieren. Für einen verbindlichen, laufenden
+> Abrechnungsbetrieb mit ELStAM-Abruf und elektronischen Meldungen bleibt
+> zertifizierte Lohnsoftware (DATEV, Lexware, sv.net + ELSTER) Pflicht.
 
 **Vorgehen je Mitarbeiter und Monat:**
 
@@ -207,23 +207,23 @@ Krankenkasse vorbereiten.
    `references/lohn-gehalt.md` — **lies die Datei**, bevor du rechnest, und prüfe,
    ob die dort genannten Werte für das abzurechnende Jahr noch aktuell sind
    (sie ändern sich jährlich).
-3. **Lohnsteuer/Soli/KiSt** aus der amtlichen Tabelle/dem PAP ziehen (siehe
-   Warnung oben) oder als `PRÜFEN: LSt` offenlassen.
+3. **Lohnsteuer/Soli/KiSt** rechnet das Skript exakt nach dem amtlichen PAP
+   (siehe unten). Bei Sonderfällen (Versorgungsbezüge, Einmalzahlungen …) als
+   `PRÜFEN: LSt` markieren.
 
-**Rechen-Skript.** Für Standardfälle gibt es `scripts/gehaltsabrechnung.py` —
-rechnet die **SV exakt** (2026er-Sätze/BBG) und die **Lohnsteuer als
-dokumentierte Näherung** (§32a-Tarif + vereinfachte Vorsorgepauschale). Nutze es,
-statt die Beträge von Hand zu rechnen:
+**Rechen-Skript.** Für Standardfälle `scripts/gehaltsabrechnung.py` nutzen,
+statt von Hand zu rechnen — es liefert die komplette Abrechnung (SV exakt +
+Lohnsteuer nach amtlichem BMF-PAP 2026):
 
 ```bash
 python3 scripts/gehaltsabrechnung.py --brutto 4000 --steuerklasse 1 \
     --kinderlos --bundesland NW --konfession keine
 ```
-Wichtig: Der Lohnsteuer-Teil ist **vorläufig** (§32a-2026-Parameter noch nicht
-gegen den PAP geprüft) und weicht um einige Euro ab — die Zahl immer als
-Näherung ausweisen und `PRÜFEN: LSt` setzen. Sobald der amtliche BMF-PAP 2026
-vorliegt, den Block „LOHNSTEUER (NÄHERUNG)" im Skript durch die exakte
-PAP-Umsetzung ersetzen; die SV-Berechnung bleibt unverändert.
+Weitere Optionen: `--kinder N`, `--zkf N` (Kinderfreibeträge für Soli/KiSt),
+`--kv-zusatz 2.9`, `--bundesland SN` (Sachsen), `--konfession ev|rk`.
+Die Lohnsteuer-Logik steckt in `scripts/lohnsteuer_2026.py`; deren Korrektheit
+lässt sich jederzeit prüfen mit `python3 scripts/lohnsteuer_2026.py --selftest`
+(rechnet die amtlichen Prüftabellen nach).
 4. **Netto ermitteln:** `Netto = Brutto − LSt − Soli − KiSt − AN-Anteil SV`.
 5. **Arbeitgeberkosten:** `AG-brutto = Brutto + AG-Anteil SV + Umlagen (U1/U2,
    Insolvenzgeldumlage) + gesetzliche Unfallversicherung`. Das ist die Zahl, die
@@ -305,5 +305,7 @@ abfließen — der volle Personalaufwand ist AG-brutto.
 - `references/lohn-gehalt.md` — SV-Beitragssätze, Beitragsbemessungsgrenzen,
   Lohnsteuerklassen, Lohnkonten/Buchungssätze und Melde­fristen. Lesen für jede
   Gehalts-/Lohnabrechnung und vor dem Verbuchen von Löhnen.
-- `scripts/gehaltsabrechnung.py` — Brutto→Netto-Rechner: SV exakt (2026),
-  Lohnsteuer als Näherung. Für Standard-Gehaltsabrechnungen nutzen.
+- `scripts/gehaltsabrechnung.py` — Brutto→Netto-Rechner (SV + Lohnsteuer), gibt
+  die komplette Abrechnung aus. Für Standard-Gehaltsabrechnungen nutzen.
+- `scripts/lohnsteuer_2026.py` — amtliche Lohnsteuer 2026 (BMF-PAP, § 39b EStG),
+  gegen die amtlichen Prüftabellen verifiziert (`--selftest`).

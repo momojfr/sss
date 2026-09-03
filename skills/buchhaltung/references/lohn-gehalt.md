@@ -6,10 +6,10 @@ unten genannten Werte sind der Stand **2026** und dienen als Ausgangspunkt;
 für einen anderen Abrechnungsmonat die amtlichen Werte des jeweiligen Jahres
 einsetzen (Quellen: BMF, GKV-Spitzenverband, Deutsche Rentenversicherung).
 
-> **Lohnsteuer ist hier NICHT tabelliert.** Sie folgt dem amtlichen
-> Programmablaufplan (PAP) des BMF und hängt von Steuerklasse, ELStAM-Freibeträgen
-> und Jahr ab. Ohne offizielle Tabelle/PAP oder Lohnsoftware die Lohnsteuer nur
-> als Schätzung ausgeben und `PRÜFEN: LSt` markieren.
+> **Lohnsteuer:** wird von `scripts/lohnsteuer_2026.py` nach dem amtlichen
+> BMF-Programmablaufplan 2026 (§ 39b EStG) berechnet und ist gegen die amtlichen
+> Prüftabellen verifiziert. Die folgenden Tabellen betreffen die
+> **Sozialversicherung**; die Lohnsteuer folgt dem PAP im Skript.
 
 ## Sozialversicherung — Beitragssätze (Stand 2026)
 
@@ -141,8 +141,14 @@ Betriebsausgabe erfasst.
 
 ## Grenzen dieses Skills
 
-Für einen verbindlichen, mehrfachen Abrechnungslauf ist **zertifizierte
-Lohnsoftware** (DATEV, Lexware, sv.net + ELSTER etc.) erforderlich — u. a. wegen
-der amtlichen Lohnsteuerberechnung, der ELStAM-Abfrage und der pflichtigen
-elektronischen Meldeverfahren. Dieser Skill rechnet und strukturiert, ersetzt
-aber keine Lohnbuchhaltung durch Fachkraft/Steuerberater.
+Die Lohnsteuer für den **laufenden Arbeitslohn** (StKl I–VI) rechnet der Skill
+amtlich exakt. Noch **nicht** abgebildet sind Sonderfälle des PAP:
+Versorgungsbezüge, Altersentlastungsbetrag, sonstige Bezüge (Einmalzahlungen,
+z. B. Weihnachtsgeld, Abfindungen), Faktorverfahren und ELStAM-Freibeträge —
+hier `PRÜFEN` markieren.
+
+Für den **verbindlichen laufenden Abrechnungsbetrieb** bleibt **zertifizierte
+Lohnsoftware** (DATEV, Lexware, sv.net + ELSTER etc.) erforderlich — wegen des
+ELStAM-Abrufs und der pflichtigen elektronischen Meldeverfahren (DEÜV,
+Beitragsnachweis, Lohnsteuer-Anmeldung). Dieser Skill rechnet und strukturiert,
+ersetzt aber keine Lohnbuchhaltung durch Fachkraft/Steuerberater.
