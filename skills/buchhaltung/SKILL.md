@@ -15,7 +15,11 @@ description: >-
   "Lohnabrechnung", "Brutto Netto", "Lohnsteuer", "Sozialversicherung", and on
   double-entry bookkeeping: "doppelte Buchführung", "Soll und Haben",
   "Buchungssatz", "GuV", "Gewinn- und Verlustrechnung", "Bilanz", "Saldenliste",
-  "Jahresabschluss", "bookkeeping", "payroll", "P&L", "balance sheet",
+  "Jahresabschluss", and on receivables/payables and payments: "Debitoren",
+  "Kreditoren", "offene Posten", "OP-Liste", "Forderungen", "Verbindlichkeiten",
+  "Mahnung", "Mahnwesen", "Zahlungsverkehr", "Zahlungsvorschlag", "Skonto",
+  "Kontenabstimmung", "wer schuldet mir Geld", "bookkeeping", "payroll", "P&L",
+  "balance sheet", "accounts receivable", "accounts payable", "dunning",
   "categorise these receipts", "prepare my VAT return",
   even when the user only drops a folder of PDFs and says "mach mal Buchhaltung".
 ---
@@ -23,7 +27,7 @@ description: >-
 # Buchhaltung — Belege, EÜR/GuV, USt, Lohn & doppelte Buchführung
 
 Dieser Skill hilft bei der laufenden Buchhaltung für Selbstständige und kleine
-Unternehmen im deutschsprachigen Raum. Er deckt fünf Bereiche ab, die
+Unternehmen im deutschsprachigen Raum. Er deckt sieben Bereiche ab, die
 aufeinander aufbauen:
 
 1. **Belege & Rechnungen** — Daten aus PDF/Bild-Belegen strukturiert erfassen.
@@ -33,6 +37,8 @@ aufeinander aufbauen:
    vorbereiten.
 4. **Löhne & Gehälter** — Brutto→Netto, Lohnsteuer (amtlicher PAP), SV, Abrechnung.
 5. **Doppelte Buchführung** — Soll/Haben, GuV und Bilanz (für Bilanzierer).
+6. **Debitoren & Kreditoren** — offene Posten, Fälligkeiten, wer schuldet wem.
+7. **Zahlungsverkehr & Mahnwesen** — Zahlungen, Skonto, Kontenabstimmung, Mahnungen.
 
 Fast jede Aufgabe folgt derselben Kette: **Beleg → Buchungssatz → Auswertung.**
 Erfasse einmal sauber, dann fallen EÜR und USt-Voranmeldung fast von selbst ab.
@@ -317,6 +323,56 @@ Rückstellungsbewertung, Anhang/Lagebericht, E-Bilanz-Taxonomie.
 
 ---
 
+## Bereich 6 — Debitoren & Kreditoren (offene Posten)
+
+Ziel: den Überblick behalten, **wer uns** (Debitoren/Forderungen) und **wem wir**
+(Kreditoren/Verbindlichkeiten) Geld schuldet.
+
+**Grundbuchungen** (Details + Skonto/Ausfall in `references/debitoren-kreditoren.md`):
+- Ausgangsrechnung: `1400 Forderungen an 8400 Erlöse (+ 1776 USt)`; Kundenzahlung
+  `1200 Bank an 1400 Forderungen`.
+- Eingangsrechnung: `3200 Wareneingang an 1600 Verbindlichkeiten (+ 1576 Vorsteuer)`;
+  eigene Zahlung `1600 Verbindlichkeiten an 1200 Bank`.
+
+**Kreditoren-Rechnungsprüfung vor Zahlung:** sachlich (Leistung erhalten?),
+rechnerisch (Summen/USt), formal (§ 14 UStG → Vorsteuerabzug). Fehlt etwas →
+`PRÜFEN`, nicht zahlen.
+
+**Offene-Posten-Liste (Skript).** Führe Rechnungen als Liste
+(`art,partner,beleg_nr,rechnungsdatum,faelligkeit,betrag,bezahlt_betrag,skonto_prozent,skonto_tage`)
+und werte sie aus:
+
+```bash
+python3 scripts/offene_posten.py --datei scripts/beispiel_rechnungen.csv --stichtag 2026-09-03
+```
+Ergebnis: OP-Liste Debitoren mit **Aging** (nicht fällig / 1–30 / 31–60 / 61–90 /
+>90 Tage) und **Mahnstufe**, OP-Liste Kreditoren mit **Zahlungsvorschlag** (Skonto
+zuerst), plus Saldo Forderungen ./. Verbindlichkeiten. Teilzahlungen (offener
+Rest = betrag − bezahlt_betrag) werden berücksichtigt.
+
+---
+
+## Bereich 7 — Zahlungsverkehr & Mahnwesen
+
+**Zahlungsverkehr.** Fällige Kreditoren begleichen (Verwendungszweck =
+Rechnungs-/Kundennummer!), **Skonto** nutzen wo möglich (`zahlbetrag = brutto ×
+(1 − skonto%)`) — lohnt fast immer. Der Zahlungsvorschlag aus Bereich 6 priorisiert
+Skonto- und fällige Posten.
+
+**Kontenabstimmung.** Bank- und Kassenkonten mit den Kontoauszügen abstimmen: der
+Saldo laut Auszug muss dem Buchsaldo entsprechen. Kasse per Kassenbuch (GoBD:
+täglich, lückenlos, nie negativ).
+
+**Mahnwesen (Debitoren).** Gestuft: Zahlungserinnerung → 1./2./3. Mahnung →
+Inkasso/Mahnbescheid; die Stufen liefert das OP-Skript nach Überfälligkeitstagen.
+**Verzug** tritt spätestens 30 Tage nach Fälligkeit ein (§ 286 BGB), **Verzugszinsen**
+9 %-Punkte über Basiszins (B2B) bzw. 5 (Verbraucher) plus 40 € Mahnpauschale (B2B,
+§ 288 BGB). Konkrete Zinshöhe/Beitreibung ist Rechtsfrage → `PRÜFEN` und auf
+Anwalt/Inkasso verweisen. Das Skript verschickt nichts und bucht nicht — es
+schlägt nur vor.
+
+---
+
 ## Arbeitsprinzipien (für alle Bereiche)
 
 - **Nachvollziehbarkeit vor Vollständigkeit.** Jede Zahl muss auf einen Beleg
@@ -350,6 +406,9 @@ Rückstellungsbewertung, Anhang/Lagebericht, E-Bilanz-Taxonomie.
   Gehalts-/Lohnabrechnung und vor dem Verbuchen von Löhnen.
 - `references/doppelte-buchfuehrung.md` — Soll/Haben-Regeln, Buchungssätze,
   GuV (§ 275 HGB, GKV & UKV) und Bilanz (§ 266 HGB). Lesen für Bilanzierer.
+- `references/debitoren-kreditoren.md` — offene Posten, Rechnungsprüfung,
+  Zahlungsverkehr/Skonto, Kontenabstimmung und Mahnwesen (Verzug, § 286/288 BGB).
+  Lesen für Debitoren/Kreditoren und Mahnungen.
 - `scripts/gehaltsabrechnung.py` — Brutto→Netto-Rechner (SV + Lohnsteuer), gibt
   die komplette Abrechnung aus. Für Standard-Gehaltsabrechnungen nutzen.
 - `scripts/lohnsteuer_2026.py` — amtliche Lohnsteuer 2026 (BMF-PAP, § 39b EStG),
@@ -357,3 +416,6 @@ Rückstellungsbewertung, Anhang/Lagebericht, E-Bilanz-Taxonomie.
 - `scripts/buchhaltung_auswertung.py` — doppelte Buchführung: Journal (CSV) →
   Saldenliste, GuV (GKV/UKV) und Bilanz mit Kontrollsummen. Beispiele:
   `scripts/beispiel_journal.csv`, `scripts/beispiel_konten.csv`.
+- `scripts/offene_posten.py` — Rechnungsliste (CSV) → OP-Liste Debitoren/Kreditoren,
+  Aging, Mahnvorschlag und Zahlungsvorschlag (Skonto). Beispiel:
+  `scripts/beispiel_rechnungen.csv`.
