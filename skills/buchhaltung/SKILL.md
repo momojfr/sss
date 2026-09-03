@@ -1,27 +1,18 @@
 ---
 name: buchhaltung
 description: >-
-  Use when the user works on bookkeeping / accounting / payroll tasks
-  (Buchhaltung, Lohn, Gehalt) — reading invoices and receipts (Belege,
-  Rechnungen), extracting amounts, VAT (USt/MwSt) and dates into a table,
-  categorising and posting transactions (Kontierung, SKR03/SKR04), preparing an
-  Einnahmen-Überschuss-Rechnung (EÜR), calculating VAT and the USt-Voranmeldung,
-  and running payroll: gross-to-net (Brutto→Netto), Lohnsteuer & social security
-  (KV/PV/RV/AV), building a payslip (Gehaltsabrechnung/Lohnzettel), posting
-  wages, and the Lohnsteuer-Anmeldung / SV-Beitragsnachweis. Triggers on
-  "Buchhaltung", "Beleg", "Rechnung erfassen", "Kontierung", "EÜR",
-  "Einnahmen-Überschuss", "Umsatzsteuer", "USt-Voranmeldung", "Vorsteuer",
-  "Ausgaben kategorisieren", "Gehalt", "Lohn", "Gehaltsabrechnung",
-  "Lohnabrechnung", "Brutto Netto", "Lohnsteuer", "Sozialversicherung", and on
-  double-entry bookkeeping: "doppelte Buchführung", "Soll und Haben",
-  "Buchungssatz", "GuV", "Gewinn- und Verlustrechnung", "Bilanz", "Saldenliste",
-  "Jahresabschluss", and on receivables/payables and payments: "Debitoren",
-  "Kreditoren", "offene Posten", "OP-Liste", "Forderungen", "Verbindlichkeiten",
-  "Mahnung", "Mahnwesen", "Zahlungsverkehr", "Zahlungsvorschlag", "Skonto",
-  "Kontenabstimmung", "wer schuldet mir Geld", "bookkeeping", "payroll", "P&L",
-  "balance sheet", "accounts receivable", "accounts payable", "dunning",
-  "categorise these receipts", "prepare my VAT return",
-  even when the user only drops a folder of PDFs and says "mach mal Buchhaltung".
+  German bookkeeping, accounting and payroll (Deutschland). Use for reading
+  invoices/receipts (Belege, Rechnungen) into a table, posting to accounts
+  (Kontierung, SKR03/SKR04, Soll/Haben), the EÜR, VAT and USt-Voranmeldung,
+  payroll (Brutto→Netto, Lohnsteuer, Sozialversicherung, Gehaltsabrechnung),
+  double-entry books with GuV and Bilanz, and open items (Debitoren/Kreditoren,
+  offene Posten, Mahnwesen, Zahlungsverkehr, Skonto). Triggers on "Buchhaltung",
+  "Beleg", "Rechnung erfassen", "Kontierung", "EÜR", "Umsatzsteuer",
+  "USt-Voranmeldung", "Vorsteuer", "Gehalt", "Lohn", "Gehaltsabrechnung",
+  "Brutto Netto", "Lohnsteuer", "GuV", "Bilanz", "Buchungssatz", "Soll und
+  Haben", "Jahresabschluss", "Debitoren", "Kreditoren", "offene Posten",
+  "Mahnung", "Skonto", "bookkeeping", "payroll", "VAT return",
+  even when the user just drops a folder of PDFs and says "mach mal Buchhaltung".
 ---
 
 # Buchhaltung — Belege, EÜR/GuV, USt, Lohn & doppelte Buchführung
