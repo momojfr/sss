@@ -1,0 +1,8 @@
+art,partner,beleg_nr,rechnungsdatum,faelligkeit,betrag,bezahlt_betrag,skonto_prozent,skonto_tage
+debitor,Muster GmbH,AR-2026-100,2026-06-15,2026-06-29,3570.00,0,,
+debitor,Beispiel AG,AR-2026-101,2026-07-20,2026-08-03,1190.00,0,,
+debitor,Kunde Schmidt,AR-2026-102,2026-08-25,2026-09-08,595.00,0,,
+debitor,Test KG,AR-2026-090,2026-04-01,2026-04-15,2380.00,1000.00,,
+kreditor,Bürobedarf Meyer,ER-5501,2026-08-28,2026-09-27,833.00,0,2.0,14
+kreditor,Telekom,ER-5502,2026-08-15,2026-09-01,119.00,0,,
+kreditor,Großhandel Nord,ER-5503,2026-07-10,2026-08-09,4998.00,0,3.0,10
